@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "lodash": "^3.6.0",
     "highlight.js": "^8.6.0",
+    "lodash": "^3.6.0",
     "react": "^0.14.0",
+    "reactcss": "^0.4.5",
     "remarkable": "^1.6.0",
     "testdom": "^2.0.0"
   },

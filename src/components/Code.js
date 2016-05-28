@@ -1,18 +1,13 @@
 'use strict'
 
-var React = require('react')
-var ReactCSS = require('reactcss')
-var markdown = require('../helpers/markdown')
-var context = require('react-context')
+import React from 'react'
+import ReactCSS from 'reactcss'
+import markdown from '../helpers/markdown'
+import context from 'react-context'
 
-var { Tile, Raised } = require('../../../react-material-design')
+import { Tile, Raised } from '../../../react-material-design'
 
 class Code extends ReactCSS.Component {
-
-  constructor() {
-    super()
-  }
-
   classes() {
     return {
       'default': {
@@ -76,17 +71,18 @@ class Code extends ReactCSS.Component {
   }
 
   render() {
-    var code = markdown.getBody(this.props.file)
-    var args = markdown.getArgs(this.props.file)
-    var colorCoded = markdown.renderCode('```\n' + code + '').trim()
-    var lineCount = colorCoded.split('\n').length
+    const code = markdown.getBody(this.props.file)
+    const args = markdown.getArgs(this.props.file)
+    const colorCoded = markdown.renderCode(`\`\`\`\n${ code }`).trim()
+    const lineCount = colorCoded.split('\n').length
 
-    var lines
+    let i
+    let lines
     if (args.lineDecoration) {
       lines = args.lineDecoration
     } else {
       lines = []
-      for (var i = 1; i < lineCount; i++) {
+      for (i = 1; i < lineCount; i++) {
         lines.push(<div key={ i }>{ i }</div>)
       }
     }

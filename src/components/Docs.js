@@ -1,27 +1,20 @@
 'use strict'
 
-var React = require('react')
-var ReactCSS = require('reactcss')
-var markdown = require('../helpers/markdown')
+import React from 'react'
+import ReactCSS from 'reactcss'
+import markdown from '../helpers/markdown'
 
-var { Grid } = require('../../../react-basic-layout')
-var MarkdownTitle = require('./MarkdownTitle')
-var Markdown = require('./Markdown')
-var Code = require('./Code')
-var Sidebar = require('./Sidebar')
+import { Grid } from '../../../react-basic-layout'
+import MarkdownTitle from './MarkdownTitle'
+import Markdown from './Markdown'
+import Sidebar from './Sidebar'
 
 class Docs extends ReactCSS.Component {
 
-  constructor() {
-    super()
-    this.state = {
-      sidebarFixed: false,
-      visible: false,
-      files: {},
-    }
-    this.changeSelection = this.changeSelection.bind(this)
-    this.attachSidebar = this.attachSidebar.bind(this)
-    this.handleScroll = this.handleScroll.bind(this)
+  state = {
+    sidebarFixed: false,
+    visible: false,
+    files: {},
   }
 
   classes() {
@@ -34,12 +27,13 @@ class Docs extends ReactCSS.Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, false)
 
-    var domFiles = React.findDOMNode(this.refs.files) && React.findDOMNode(this.refs.files).children
+    const domFiles = this.refs.files && this.refs.files.children
 
     if (domFiles) {
-      var files = {}
-      for (var i = 0; i < domFiles.length; i++) {
-        var file = domFiles[i]
+      const files = {}
+      let i
+      for (i = 0; i < domFiles.length; i++) {
+        const file = domFiles[i]
         files[file.offsetTop] = file.id
       }
 
@@ -51,16 +45,16 @@ class Docs extends ReactCSS.Component {
     window.removeEventListener('scroll', this.handleScroll, false)
   }
 
-  handleScroll(e) {
+  handleScroll = () => {
     this.changeSelection()
     this.attachSidebar()
   }
 
-  attachSidebar() {
-    var sidebar = React.findDOMNode(this.refs.sidebar)
+  attachSidebar = () => {
+    const sidebar = this.refs.sidebar
 
     if (sidebar) {
-      var sidebarTop = sidebar.getBoundingClientRect().top
+      const sidebarTop = sidebar.getBoundingClientRect().top
 
       if (sidebarTop <= 0 && this.state.sidebarFixed === false) {
         this.setState({ sidebarFixed: true })
@@ -73,12 +67,11 @@ class Docs extends ReactCSS.Component {
   }
 
   changeSelection() {
-    var top = document.body.scrollTop - 300
-    var mostVisible = ''
-
-    for (var offset in this.state.files) {
+    const top = document.body.scrollTop - 300
+    let mostVisible = ''
+    for (let offset in this.state.files) {
       if (this.state.files.hasOwnProperty(offset)) {
-        var id = this.state.files[offset]
+        const id = this.state.files[offset]
         if (offset < top) {
           mostVisible = id
         }
@@ -91,19 +84,19 @@ class Docs extends ReactCSS.Component {
   }
 
   render() {
-    var markdownFiles = []
+    const markdownFiles = []
 
-    for (var fileName in this.props.markdown) {
+    for (let fileName in this.props.markdown) {
       if (this.props.markdown.hasOwnProperty(fileName)) {
-        var file = this.props.markdown[fileName]
-        var args = markdown.getArgs(file)
-        var body = markdown.getBody(file)
+        const file = this.props.markdown[fileName]
+        const args = markdown.getArgs(file)
+        const body = markdown.getBody(file)
 
         markdownFiles.push(
           <div key={ fileName } id={ args.id } is="file" className="markdown">
 
             <MarkdownTitle
-              isHeadline={ markdown.isSubSection(fileName) ? true : false }
+              isHeadline={ markdown.isSubSection(fileName) !== null }
               title={ args.title }
               link={ args.id }
               primaryColor={ this.props.primaryColor }
@@ -170,21 +163,26 @@ class Docs extends ReactCSS.Component {
           }
         ` }</style>
 
-
-          { this.props.sidebar !== false ?
-            <Grid>
-              <div is="sidebar" ref="sidebar">
-                <Sidebar files={ this.props.markdown } active={ this.state.visible } primaryColor={ this.props.primaryColor } bottom={ this.props.bottom } fixed={ this.state.sidebarFixed } />
-              </div>
-              <div ref="files" is="files">
-                { markdownFiles }
-              </div>
-            </Grid>
-          : <div ref="files" is="files">
+        { this.props.sidebar !== false ? (
+          <Grid>
+            <div is="sidebar" ref="sidebar">
+              <Sidebar
+                files={ this.props.markdown }
+                active={ this.state.visible }
+                primaryColor={ this.props.primaryColor }
+                bottom={ this.props.bottom }
+                fixed={ this.state.sidebarFixed }
+              />
+            </div>
+            <div ref="files" is="files">
+              { markdownFiles }
+            </div>
+          </Grid>
+        ) : (
+          <div ref="files" is="files">
             { markdownFiles }
-          </div> }
-
-
+          </div>
+        ) }
       </div>
     )
   }
@@ -193,8 +191,5 @@ class Docs extends ReactCSS.Component {
 Docs.defaultProps = {
   primaryColor: '#03A9F4',
 }
-
-module.exports = Docs
-
 
 module.exports = Docs

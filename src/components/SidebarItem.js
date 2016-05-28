@@ -1,10 +1,9 @@
-/* jshint node: true, esnext: true */
-"use strict";
+'use strict'
 
-var React = require('react');
-var ReactCSS = require('reactcss');
+import React from 'react'
+import ReactCSS from 'reactcss'
 
-var { Tile } = require('../../../react-material-design');
+import { Tile } from '../../../react-material-design'
 
 module.exports = class SidebarItem extends ReactCSS.Component {
 
@@ -39,7 +38,7 @@ module.exports = class SidebarItem extends ReactCSS.Component {
           color: this.props.primaryColor,
         },
       },
-    };
+    }
   }
 
   render() {
@@ -50,6 +49,6 @@ module.exports = class SidebarItem extends ReactCSS.Component {
           <a href={ this.props.href } is="sidebarItem">{ this.props.label }</a>
         </Tile>
       </div>
-    );
+    )
   }
-};
+}

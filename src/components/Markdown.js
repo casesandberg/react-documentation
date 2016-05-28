@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-var React = require('react');
-var ReactCSS = require('reactcss');
-var markdown = require('../helpers/markdown');
+import React from 'react'
+import ReactCSS from 'reactcss'
+import markdown from '../helpers/markdown'
 
-var Code = require('./Code');
+import Code from './Code'
 
 module.exports = class Markdown extends ReactCSS.Component {
 
@@ -17,32 +17,39 @@ module.exports = class Markdown extends ReactCSS.Component {
           color: 'rgba(0,0,0,.47)',
         },
       },
-    };
+    }
   }
 
   shouldComponentUpdate() {
-    return false;
+    return false
   }
 
   render() {
-    var children = this.props.children;
+    const children = this.props.children
 
-    var newLines = children;
+    let newLines = children
 
-    var codes = [];
-    for (var i = 0; i < markdown.isCode(children).length; i++) {
-      var codeBlock = markdown.isCode(children)[i];
-      newLines = newLines.replace(codeBlock[1], '|Code:' + i + '|');
-      codes[i] = <Code file={ codeBlock[2] } condensed={ this.props.condensed } borders />;
+    const codes = []
+    for (let i = 0; i < markdown.isCode(children).length; i++) {
+      const codeBlock = markdown.isCode(children)[i]
+      newLines = newLines.replace(codeBlock[1], `|Code:${ i }|`)
+      codes[i] = <Code file={ codeBlock[2] } condensed={ this.props.condensed } borders />
     }
 
-    var markdownFile = [];
-    for (var i = 0; i < newLines.split('\n').length; i++) {
-      var line = newLines.split('\n')[i];
+    const markdownFile = []
+    for (let i = 0; i < newLines.split('\n').length; i++) {
+      const line = newLines.split('\n')[i]
       if (markdown.isCodeBlock(line)) {
-        markdownFile.push(<div key={ i }>{ codes[ markdown.codeNumber(line) ] }</div>);
+        markdownFile.push(<div key={ i }>{ codes[markdown.codeNumber(line)] }</div>)
       } else {
-        markdownFile.push(<div key={ i } is="markdown" className="markdown text" dangerouslySetInnerHTML={ {__html: markdown.render(line)} } />);
+        markdownFile.push((
+          <div
+            key={ i }
+            is="markdown"
+            className="markdown text"
+            dangerouslySetInnerHTML={ { __html: markdown.render(line) } }
+          />
+        ))
       }
     }
 
@@ -50,6 +57,6 @@ module.exports = class Markdown extends ReactCSS.Component {
       <div is="markdown">
         { markdownFile }
       </div>
-    );
+    )
   }
-};
+}
