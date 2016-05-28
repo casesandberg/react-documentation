@@ -6,7 +6,7 @@ import markdown from '../helpers/markdown'
 
 import SidebarItem from './SidebarItem'
 
-module.exports = class Sidebar extends ReactCSS.Component {
+export class Sidebar extends ReactCSS.Component {
   classes() {
     return {
       'default': {
@@ -76,3 +76,5 @@ module.exports = class Sidebar extends ReactCSS.Component {
     )
   }
 }
+
+export default Sidebar

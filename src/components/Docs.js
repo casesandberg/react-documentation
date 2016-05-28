@@ -9,7 +9,10 @@ import MarkdownTitle from './MarkdownTitle'
 import Markdown from './Markdown'
 import Sidebar from './Sidebar'
 
-class Docs extends ReactCSS.Component {
+export class Docs extends ReactCSS.Component {
+  static defaultProps = {
+    primaryColor: '#03A9F4',
+  }
 
   state = {
     sidebarFixed: false,
@@ -37,7 +40,7 @@ class Docs extends ReactCSS.Component {
         files[file.offsetTop] = file.id
       }
 
-      this.setState({ files: files })
+      this.setState({ files })
     }
   }
 
@@ -188,8 +191,4 @@ class Docs extends ReactCSS.Component {
   }
 }
 
-Docs.defaultProps = {
-  primaryColor: '#03A9F4',
-}
-
-module.exports = Docs
+export default Docs

@@ -6,7 +6,7 @@ import markdown from '../helpers/markdown'
 
 import Code from './Code'
 
-module.exports = class Markdown extends ReactCSS.Component {
+export class Markdown extends ReactCSS.Component {
 
   classes() {
     return {
@@ -60,3 +60,5 @@ module.exports = class Markdown extends ReactCSS.Component {
     )
   }
 }
+
+export default Markdown

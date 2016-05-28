@@ -5,7 +5,7 @@ import ReactCSS from 'reactcss'
 
 import { Tile } from '../../../react-material-design'
 
-module.exports = class SidebarItem extends ReactCSS.Component {
+export class SidebarItem extends ReactCSS.Component {
 
   classes() {
     return {
@@ -52,3 +52,5 @@ module.exports = class SidebarItem extends ReactCSS.Component {
     )
   }
 }
+
+export default SidebarItem

@@ -7,7 +7,9 @@ import context from 'react-context'
 
 import { Tile, Raised } from '../../../react-material-design'
 
-class Code extends ReactCSS.Component {
+export class Code extends ReactCSS.Component {
+  static contextTypes = context.subscribe(['width'])
+
   classes() {
     return {
       'default': {
@@ -112,6 +114,4 @@ class Code extends ReactCSS.Component {
   }
 }
 
-Code.contextTypes = context.subscribe(['width'])
-
-module.exports = Code
+export default Code

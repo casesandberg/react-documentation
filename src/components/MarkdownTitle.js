@@ -3,7 +3,7 @@
 import React from 'react'
 import ReactCSS from 'reactcss'
 
-module.exports = class MarkdownTitle extends ReactCSS.Component {
+export class MarkdownTitle extends ReactCSS.Component {
 
   constructor() {
     super()
@@ -67,3 +67,5 @@ module.exports = class MarkdownTitle extends ReactCSS.Component {
     )
   }
 }
+
+export default MarkdownTitle
